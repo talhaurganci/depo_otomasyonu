@@ -1,5 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
+* To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -9,6 +9,9 @@ package depo_otomasyonu;
  *
  * @author talha
  */
+import static depo_otomasyonu.Customer_Login.customerid;
+import static depo_otomasyonu.Customer_Login.username;
+import static java.awt.image.ImageObserver.HEIGHT;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,11 +19,12 @@ import javax.swing.JOptionPane;
 
 public class Manager_Login extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Manager_Login
-     */
+    public static String username;
+    public static int mID;
+    public static String sehir;
+    
     public Manager_Login() {
-        initComponents();
+        initComponents();           
     }
 
     /**
@@ -46,12 +50,12 @@ public class Manager_Login extends javax.swing.JFrame {
         getContentPane().setLayout(null);
 
         username_label.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        username_label.setText("KULLANICI ADI:");
+        username_label.setText("KULLANICI ADI");
         getContentPane().add(username_label);
         username_label.setBounds(80, 60, 120, 50);
 
         password_label.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        password_label.setText("ŞİFRE:");
+        password_label.setText("ŞİFRE");
         getContentPane().add(password_label);
         password_label.setBounds(80, 170, 120, 50);
 
@@ -84,23 +88,39 @@ public class Manager_Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void login_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_login_buttonActionPerformed
-       String cUsername=username_text.getText();
-       String cPassword=password_text.getText();
+       String mUsername=username_text.getText();
+       String mPassword=password_text.getText();
+       String a = "Hoşgeldiniz";
 
         try{
             Class.forName("oracle.jdbc.OracleDriver");
             String sql = "SELECT * FROM Manager Where mUsername='"+username_text.getText()+"' and mPassword='"+password_text.getText()+"'";
             Connection con=DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/XEPDB1","SYSTEM","1124");
-            PreparedStatement ps = con.prepareStatement(sql);
-             ResultSet rs=ps.executeQuery();
-             if(rs.next()){
-
-                 JOptionPane.showMessageDialog(null,"BAŞARILI GİRİŞ!!!");
+            CallableStatement cs = con.prepareCall("{call LOGİN_MPROC(?,?,?)}");
+            cs.registerOutParameter(1, java.sql.Types.INTEGER);
+            cs.setString(2, mUsername);
+            cs.setString(3, mPassword);
+            cs.executeUpdate();
+           if(cs.getInt(1)==0){
+               JOptionPane.showMessageDialog(null, "YANLIŞ KULLANICI ADI VEYA ŞİFRE!!!");
+            }
+            else{
+               // JOptionPane.showMessageDialog(null, "BAŞARILI!!");
+                PreparedStatement ps = con.prepareStatement(sql);      
+                ResultSet rs = ps.executeQuery();
+                if(rs.next()){
+                 //JOptionPane.showMessageDialog(null,"BAŞARILI GİRİŞ!!!"); 
+                 JOptionPane.showMessageDialog(null, rs.getString("mFname"), a, HEIGHT);                
+                 username = rs.getString("mUsername");
+                 mID = rs.getInt("mID");
+                 sehir = rs.getString("Cty");
+                 ManagerPanel managerpanel = new ManagerPanel();
+                 rs.close();
+                 con.close();
+                 managerpanel.show();
+                 this.hide();
              }
-             else{
-                 JOptionPane.showMessageDialog(null,"YANLIŞ KULLANICI ADI VEYA ŞİFRE!!!");
-
-             }
+            }  
 
         }
         catch(ClassNotFoundException ex){

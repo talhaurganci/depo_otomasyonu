@@ -13,105 +13,138 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
-    public class Customer_Panel extends javax.swing.JFrame {
-               
-    public Customer_Panel() {           
+public class Customer_Panel extends javax.swing.JFrame {
+
+    public static int urunadedi;
+    public String pName;
+    public String date;
+    public String pPCS;
+    public String sehir;
+    public int productsID;
+
+    public Customer_Panel() {
         initComponents();
-        Customer_Login log = new Customer_Login();         
-        username_label.setText("Hoşgeldiniz "+log.username); 
+        Customer_Login log = new Customer_Login();
+        username_label.setText("Hoşgeldiniz " + log.username);
         tablo();
+        uruntablo.enable();
     }
-    
+
     public void tablo() {
-     Customer_Login log = new Customer_Login();  
-     DefaultTableModel model = new DefaultTableModel(new String[]{"Ürün Adı", "Ürün Adedi", "Ürün Süresi" ,"Ürünün Durumu","Ürünün Şehri"}, 0);        
-    try {            
+        Customer_Login log = new Customer_Login();
+        DefaultTableModel model = new DefaultTableModel(new String[]{"Ürün Adı", "Ürün Adedi", "Bitiş Tarihi", "Kalan Süre", "Ürünün Durumu", "Ürünün Şehri","ÜRÜN ID"}, 0);
+        try {
             Class.forName("oracle.jdbc.OracleDriver");
-            
+
             Connection con = null;
             Statement st = null;
             ResultSet rs = null;
-            
-            con=DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/XEPDB1","SYSTEM","1124");
-            
+
+            con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/XEPDB1", "SYSTEM", "1124");
+
             st = con.createStatement();
-        
-            
-            rs = st.executeQuery("SELECT pName,pPCS,pDuration,ProductState,Sehir FROM CustomerProducts WHERE customerID='"+log.customerid+"'");
-            
-                                   
-           // alttaki 3 satırda raporlar formundak toplam tutarı ekrana yazdırdık
-                                         
-            while (rs.next()) {                                     
-                    String urunadi = rs.getString("pName");  
-                    String urunadedi = rs.getString("pPCS");                                        
-                    java.sql.Date date = rs.getDate("pDuration");
-                    Date date1 = new Date(date.getTime());
-                    Date now = new Date();
-                    long diffInMillies = Math.abs(date1.getTime() - now.getTime());
-                    long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-                    int urunsuresi = (int)diff;
-                    String urundurumu = rs.getString("ProductState"); 
-                    String urunsehri = rs.getString("Sehir");
-                    model.addRow(new Object[]{urunadi, urunadedi, urunsuresi,urundurumu,urunsehri});
-                };                                                
+
+            rs = st.executeQuery("SELECT pName,pPCS,pDuration,ProductState,Cty,productsID FROM CustomerProducts WHERE customerID='" + log.customerid + "'");
+
+            // alttaki 3 satırda raporlar formundak toplam tutarı ekrana yazdırdık
+            while (rs.next()) {
+                String urunadi = rs.getString("pName");
+                urunadedi = rs.getInt("pPCS");
+                int productsID = rs.getInt("productsID");
+                java.sql.Date date = rs.getDate("pDuration");
+                Date date1 = new Date(date.getTime());
+                Date now = new Date();
+                long diffInMillies = Math.abs(date1.getTime() - now.getTime());
+                long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+                int urunsuresi = (int) diff;
+                String urundurumu = rs.getString("ProductState");
+                String urunsehri = rs.getString("Cty");
+                model.addRow(new Object[]{urunadi, urunadedi, date, urunsuresi, urundurumu, urunsehri,productsID});
+            };
             con.close();
-            uruntablo.setModel(model); 
+            uruntablo.setModel(model);
             uruntablo.setEnabled(false);
         } catch (ClassNotFoundException ex) {
-           JOptionPane.showMessageDialog(null,"Hata: " + ex.toString());
+            JOptionPane.showMessageDialog(null, "Hata: " + ex.toString());
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this,"Veritabanına bağlantı sağlanamadı! " + ex.toString());
+            JOptionPane.showMessageDialog(this, "Veritabanına bağlantı sağlanamadı! " + ex.toString());
         }
     }
-    
-    public void tablo2(){
-        Customer_Login log = new Customer_Login();  
-        DefaultTableModel model = new DefaultTableModel(new String[]{"Ürün Adı", "Ürün Adedi", "Ürün Süresi" ,"Ürünün Durumu","Ürünün Şehri"}, 0);        
-    try {            
+
+    public void tablo2() {
+        Customer_Login log = new Customer_Login();
+        DefaultTableModel model = new DefaultTableModel(new String[]{"Ürün Adı", "Ürün Tipi", "Şehir", "Ürünün Fiyatı", "Ürünün Süresi", "Ürünün Durumu"}, 0);
+        try {
             Class.forName("oracle.jdbc.OracleDriver");
-            
+
             Connection con = null;
             Statement st = null;
             ResultSet rs = null;
-            
-            con=DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/XEPDB1","SYSTEM","1124");
-            
+
+            con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/XEPDB1", "SYSTEM", "1124");
+
             st = con.createStatement();
-        
-            
-            rs = st.executeQuery("SELECT pName,pPCS,pDuration,ProductState,Sehir FROM CustomerProducts WHERE customerID='"+log.customerid+"'");
-            
-                                   
-           // alttaki 3 satırda raporlar formundak toplam tutarı ekrana yazdırdık
-                                         
-            while (rs.next()) {                                     
-                    String urunadi = rs.getString("pName");  
-                    String urunadedi = rs.getString("pPCS");                                        
-                    java.sql.Date date = rs.getDate("pDuration");
-                    Date date1 = new Date(date.getTime());
-                    Date now = new Date();
-                    long diffInMillies = Math.abs(date1.getTime() - now.getTime());
-                    long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-                    int urunsuresi = (int)diff;
-                    String urundurumu = rs.getString("ProductState"); 
-                    String urunsehri = rs.getString("Sehir");
-                    model.addRow(new Object[]{urunadi, urunadedi, urunsuresi,urundurumu,urunsehri});
-                };                                                
+
+            rs = st.executeQuery("SELECT * FROM urun_onay WHERE customerID='" + Customer_Login.customerid + "'");
+
+            // alttaki 3 satırda raporlar formundak toplam tutarı ekrana yazdırdık
+            while (rs.next()) {
+                String urunadi = rs.getString("pName");
+                String uruntipi = rs.getString("sType");
+                String urunsehri = rs.getString("sCITY");
+                int fiyat = rs.getInt("sPRİCE");
+                java.sql.Date date = rs.getDate("pDuration");
+                Date date1 = new Date(date.getTime());
+                Date now = new Date();
+                long diffInMillies = Math.abs(date1.getTime() - now.getTime());
+                long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+                int urunsuresi = (int) diff;
+                String urundurumu = rs.getString("ProductState");
+
+                model.addRow(new Object[]{urunadi, uruntipi, urunsehri, fiyat, urunsuresi, urundurumu});
+            };
             con.close();
-            uruntablo.setModel(model); 
+            uruntablo.setModel(model);
             uruntablo.setEnabled(false);
         } catch (ClassNotFoundException ex) {
-           JOptionPane.showMessageDialog(null,"Hata: " + ex.toString());
+            JOptionPane.showMessageDialog(null, "Hata: " + ex.toString());
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this,"Veritabanına bağlantı sağlanamadı! " + ex.toString());
+            JOptionPane.showMessageDialog(this, "Veritabanına bağlantı sağlanamadı! " + ex.toString());
         }
     }
+
+    public void urunsec() {
+        DefaultTableModel model = (DefaultTableModel) uruntablo.getModel();
+
+        int selectedRowIndex = uruntablo.getSelectedRow();
+
+        pName = model.getValueAt(selectedRowIndex, 0).toString();
+
+        date = model.getValueAt(selectedRowIndex, 2).toString();
+
+        pPCS = model.getValueAt(selectedRowIndex, 1).toString();
+
+        //  Date date = (java.sql.Date) model.getValueAt(selectedRowIndex, 2);
+        sehir = model.getValueAt(selectedRowIndex, 5).toString();
+        
+        productsID = Integer.valueOf(model.getValueAt(selectedRowIndex, 6).toString());
+
+        urunadi_textfield.setText(pName);
+        urunadedi_textfield.setText(pPCS);
+        jDateChooser1.setDate((Date) uruntablo.getModel().getValueAt(selectedRowIndex, 2));
+        sehirbox.getModel().setSelectedItem(sehir);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -136,6 +169,9 @@ import javax.swing.table.DefaultTableModel;
         sehirbox = new javax.swing.JComboBox<>();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
         background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -192,7 +228,7 @@ import javax.swing.table.DefaultTableModel;
             }
         });
         getContentPane().add(urunekle_button);
-        urunekle_button.setBounds(80, 300, 100, 40);
+        urunekle_button.setBounds(30, 310, 100, 40);
 
         uruntablo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -213,6 +249,11 @@ import javax.swing.table.DefaultTableModel;
                 return canEdit [columnIndex];
             }
         });
+        uruntablo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                uruntabloMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(uruntablo);
 
         getContentPane().add(jScrollPane3);
@@ -226,6 +267,11 @@ import javax.swing.table.DefaultTableModel;
         jLabel1.setBounds(30, 210, 90, 20);
 
         sehirbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "İstanbul", "Amasya", "Ankara", "Sivas" }));
+        sehirbox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sehirboxActionPerformed(evt);
+            }
+        });
         getContentPane().add(sehirbox);
         sehirbox.setBounds(140, 210, 110, 30);
         getContentPane().add(jDateChooser1);
@@ -241,6 +287,34 @@ import javax.swing.table.DefaultTableModel;
         getContentPane().add(jButton1);
         jButton1.setBounds(50, 390, 170, 50);
 
+        jButton2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jButton2.setText("Güncelle");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton2);
+        jButton2.setBounds(150, 310, 100, 40);
+
+        jButton3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton3.setText("Onay Bekleyenleri Göster");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton3);
+        jButton3.setBounds(40, 460, 190, 50);
+
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jTextField1);
+        jTextField1.setBounds(420, 40, 190, 30);
+
         background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/depo_otomasyonu/background.jpg"))); // NOI18N
         background.setText("jLabel1");
         getContentPane().add(background);
@@ -255,55 +329,51 @@ import javax.swing.table.DefaultTableModel;
     }//GEN-LAST:event_urunadi_textfieldActionPerformed
 
     private void urunekle_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_urunekle_buttonActionPerformed
-        String urunadi=urunadi_textfield.getText();
-        String urunadedi=urunadedi_textfield.getText();
+        String urunadi = urunadi_textfield.getText();
+        String urunadedi = urunadedi_textfield.getText();
         Date date = new Date();
-        java.sql.Date urunsuresi = new java.sql.Date(jDateChooser1.getDate().getTime());        
+        java.sql.Date urunsuresi = new java.sql.Date(jDateChooser1.getDate().getTime());
         System.out.println(urunsuresi);
-        String productstate="Bekleniyor";
-        String sehir= String.valueOf((sehirbox.getSelectedItem()));
-               
-           try {
-                    
-                if (urunadi.equals("") || urunadedi.equals("") || urunsuresi.equals(null)) {
+        String productstate = "Bekleniyor";
+        String sehir = String.valueOf((sehirbox.getSelectedItem()));
 
-                    JOptionPane.showMessageDialog(this, "Lütfen Boş Alanları Doldurunuz!");
+        try {
 
-                } else {                   
-                   Customer_Login log=new Customer_Login();                  
-                   Class.forName("oracle.jdbc.OracleDriver");
+            if (urunadi.equals("") || urunadedi.equals("") || urunsuresi.equals(null)) {
 
-                    Connection con = null;                    
-                    Statement st = null;
-                    ResultSet rs = null;
-                    
-                    con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/XEPDB1","SYSTEM","1124");
-                    PreparedStatement pstmt = con.prepareStatement("INSERT INTO CustomerProducts (pName,pPCS,pDuration,customerID,ProductState,Sehir) VALUES (?,?,?,?,?,?)");
-                    pstmt.setString(1, urunadi);
-                    pstmt.setString(2, urunadedi);
-                    pstmt.setDate(3, urunsuresi);
-                    pstmt.setInt(4, log.customerid);
-                    pstmt.setString(5, productstate);
-                    pstmt.setString(6, sehir);
-                    //st = con.createStatement();                    
-                   // String sql = "INSERT INTO CustomerProducts (pName,pPCS,TO_DATE(pDuration,'yyyy-mm-dd'),customerID,ProductState,Sehir)" 
-                   //         + " VALUES ('"+urunadi+"', '"+urunadedi+"', '"+urunsuresi+"','"+log.customerid+"','"+productstate+"','"+sehir+"')";                                        
+                JOptionPane.showMessageDialog(this, "Lütfen Boş Alanları Doldurunuz!");
 
-                   // st.executeUpdate(sql);  
-                    pstmt.execute();
-                    DefaultTableModel model = (DefaultTableModel)uruntablo.getModel();
-                    model.setRowCount(0);
-                    tablo();
-                   
-                    JOptionPane.showMessageDialog(null, urunadi + "  adlı ürün eklenmiştir.");                               
-                }
-            
-            } catch (ClassNotFoundException ex) {
-                 JOptionPane.showMessageDialog(null,"Hata: " + ex.toString());
+            } else {
+                Customer_Login log = new Customer_Login();
+                Class.forName("oracle.jdbc.OracleDriver");
 
-            } catch (SQLException ex) {
-                 JOptionPane.showMessageDialog(this,"Veritabanına bağlantı sağlanamadı! " + ex.toString());
-            }                             
+                Connection con = null;
+
+                con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/XEPDB1", "SYSTEM", "1124");
+                PreparedStatement pstmt = con.prepareStatement("INSERT INTO CustomerProducts (pName,pPCS,pDuration,customerID,ProductState,Cty) VALUES (?,?,?,?,?,?)");
+                pstmt.setString(1, urunadi);
+                pstmt.setString(2, urunadedi);
+                pstmt.setDate(3, urunsuresi);
+                pstmt.setInt(4, log.customerid);
+                pstmt.setString(5, productstate);
+                pstmt.setString(6, sehir);
+                pstmt.execute();
+                DefaultTableModel model = (DefaultTableModel) uruntablo.getModel();
+                model.setRowCount(0);
+                tablo();
+
+                JOptionPane.showMessageDialog(null, urunadi + "  adlı ürün eklenmiştir.");
+            }
+
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Hata: " + ex.toString());
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Veritabanına bağlantı sağlanamadı! " + ex.toString());
+        }
+        tablo();
+        uruntablo.enable();
+        jButton2.setEnabled(true);
     }//GEN-LAST:event_urunekle_buttonActionPerformed
 
     private void logout_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logout_buttonActionPerformed
@@ -316,8 +386,63 @@ import javax.swing.table.DefaultTableModel;
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         DefaultTableModel model = (DefaultTableModel) uruntablo.getModel();
         model.setRowCount(0);
-        
+        tablo2();
+        uruntablo.disable();
+        jButton2.setEnabled(false);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void sehirboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sehirboxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sehirboxActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
+        try {
+            pName = urunadi_textfield.getText();
+            pPCS = urunadedi_textfield.getText();
+            java.sql.Date date = new java.sql.Date(jDateChooser1.getDate().getTime());
+            sehir = sehirbox.getSelectedItem().toString();
+
+            Class.forName("oracle.jdbc.OracleDriver");
+            // pName,pPCS,pDuration,customerID,ProductState,Cty
+            Connection con = null;
+
+            con = DriverManager.getConnection("jdbc:oracle:thin:@//localhost:1521/XEPDB1", "SYSTEM", "1124");
+            PreparedStatement pstmt = con.prepareStatement("UPDATE CustomerProducts SET pName=?,pPCS=?,pDuration=?,CTY=? WHERE productsID=?");
+            pstmt.setString(1, pName);
+            pstmt.setString(2, pPCS);
+            pstmt.setDate(3, date);
+            pstmt.setString(4, sehir);
+            pstmt.setInt(5, productsID);
+            pstmt.executeQuery();
+            
+            JOptionPane.showMessageDialog(null, pName + "  adlı ürün güncellenmiştir.");
+
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Customer_Panel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Customer_Panel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         tablo();
+        uruntablo.enable();
+        jButton2.setEnabled(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        tablo();
+        uruntablo.enable();
+        jButton2.setEnabled(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void uruntabloMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_uruntabloMouseClicked
+        urunsec();
+    }//GEN-LAST:event_uruntabloMouseClicked
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+       TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(((DefaultTableModel) uruntablo.getModel())); 
+       sorter.setRowFilter(RowFilter.regexFilter(jTextField1.getText()));
+       uruntablo.setRowSorter(sorter);
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -348,10 +473,10 @@ import javax.swing.table.DefaultTableModel;
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
-        
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {                 
+            public void run() {
                 new Customer_Panel().setVisible(true);
             }
         });
@@ -361,9 +486,12 @@ import javax.swing.table.DefaultTableModel;
     private javax.swing.JLabel Filtrele_label;
     private javax.swing.JLabel background;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JButton logout_button;
     private javax.swing.JComboBox<String> sehirbox;
     private javax.swing.JLabel urunadedi_label;

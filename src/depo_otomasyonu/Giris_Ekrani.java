@@ -41,6 +41,11 @@ public class Giris_Ekrani extends javax.swing.JFrame {
         manager_button.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         manager_button.setText("Yönetici Girişi");
         manager_button.setPreferredSize(new java.awt.Dimension(200, 40));
+        manager_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                manager_buttonActionPerformed(evt);
+            }
+        });
         getContentPane().add(manager_button);
         manager_button.setBounds(100, 70, 175, 70);
 
@@ -70,6 +75,12 @@ public class Giris_Ekrani extends javax.swing.JFrame {
         pencere.show();
         this.hide();
     }//GEN-LAST:event_musteri_buttonActionPerformed
+
+    private void manager_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manager_buttonActionPerformed
+        Manager_Login log = new Manager_Login();
+        log.show();
+        this.hide();
+    }//GEN-LAST:event_manager_buttonActionPerformed
 
     /**
      * @param args the command line arguments

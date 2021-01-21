@@ -21,7 +21,7 @@ public class Customer_Login extends javax.swing.JFrame {
     public static String durum;
     
     public Customer_Login() {        
-        initComponents();
+        initComponents();        
     }
     
     
@@ -39,6 +39,7 @@ public class Customer_Login extends javax.swing.JFrame {
         password_label = new javax.swing.JLabel();
         login_button = new javax.swing.JButton();
         password_text = new javax.swing.JPasswordField();
+        jButton1 = new javax.swing.JButton();
         Background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -80,6 +81,15 @@ public class Customer_Login extends javax.swing.JFrame {
         password_text.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         getContentPane().add(password_text);
         password_text.setBounds(270, 170, 150, 50);
+
+        jButton1.setText("Kayıt Ol");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton1);
+        jButton1.setBounds(380, 310, 80, 30);
 
         Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/depo_otomasyonu/background.jpg"))); // NOI18N
         Background.setMaximumSize(new java.awt.Dimension(500, 400));
@@ -136,6 +146,12 @@ public class Customer_Login extends javax.swing.JFrame {
     private void username_textActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_username_textActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_username_textActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Customer_add add = new Customer_add();
+        add.show();
+        this.hide();
+    }//GEN-LAST:event_jButton1ActionPerformed
     
     /**
      * @param args the command line arguments
@@ -174,6 +190,7 @@ public class Customer_Login extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Background;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton login_button;
     private javax.swing.JLabel password_label;
     private javax.swing.JPasswordField password_text;
