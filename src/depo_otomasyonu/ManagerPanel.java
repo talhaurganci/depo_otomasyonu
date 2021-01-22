@@ -312,7 +312,7 @@ public class ManagerPanel extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton3);
-        jButton3.setBounds(110, 420, 43, 23);
+        jButton3.setBounds(100, 390, 90, 30);
 
         jLabel1.setText("Ürün Adedi:");
         getContentPane().add(jLabel1);
@@ -365,9 +365,12 @@ public class ManagerPanel extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
         onaylanantablo();
         islemyap_button.setEnabled(false);
+        jTextField2.setText("");
+        jTextField1.setText("");
+        jTextField3.setText("");
+        fiyat_textfield.setText("");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void onaydurum_boxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_onaydurum_boxActionPerformed
@@ -431,7 +434,7 @@ public class ManagerPanel extends javax.swing.JFrame {
         }
         DefaultTableModel model = (DefaultTableModel) onaybekleyen_tablo.getModel();
         model.setRowCount(0);
-        onaybekleyentablo();
+        onaybekleyentablo();                
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -450,6 +453,10 @@ public class ManagerPanel extends javax.swing.JFrame {
         }  */
       
       urunsil();
+      jTextField2.setText("");
+      jTextField1.setText("");
+      jTextField3.setText("");
+      fiyat_textfield.setText("");
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void onaybekleyen_tabloMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_onaybekleyen_tabloMouseClicked
@@ -473,6 +480,10 @@ public class ManagerPanel extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         onaybekleyentablo();
         islemyap_button.setEnabled(true);
+        jTextField2.setText("");
+        jTextField1.setText("");
+        jTextField3.setText("");
+        fiyat_textfield.setText("");
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed

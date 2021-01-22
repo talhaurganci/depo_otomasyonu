@@ -41,6 +41,7 @@ public class Manager_Login extends javax.swing.JFrame {
         password_text = new javax.swing.JPasswordField();
         username_text = new javax.swing.JTextField();
         login_button = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         Background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -76,6 +77,16 @@ public class Manager_Login extends javax.swing.JFrame {
         });
         getContentPane().add(login_button);
         login_button.setBounds(170, 290, 117, 60);
+
+        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton1.setText("Geri Dön");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton1);
+        jButton1.setBounds(10, 20, 90, 30);
 
         Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/depo_otomasyonu/background.jpg"))); // NOI18N
         Background.setMaximumSize(new java.awt.Dimension(500, 400));
@@ -131,6 +142,12 @@ public class Manager_Login extends javax.swing.JFrame {
         }           // TODO add your handling code here:
     }//GEN-LAST:event_login_buttonActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Giris_Ekrani object = new Giris_Ekrani();
+        object.show();
+        this.hide();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -168,6 +185,7 @@ public class Manager_Login extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Background;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton login_button;
     private javax.swing.JLabel password_label;
     private javax.swing.JPasswordField password_text;

@@ -188,7 +188,7 @@ public class Customer_Panel extends javax.swing.JFrame {
             }
         });
         getContentPane().add(logout_button);
-        logout_button.setBounds(750, 600, 81, 23);
+        logout_button.setBounds(720, 580, 90, 23);
 
         urunadi_textfield.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -197,6 +197,12 @@ public class Customer_Panel extends javax.swing.JFrame {
         });
         getContentPane().add(urunadi_textfield);
         urunadi_textfield.setBounds(140, 90, 110, 30);
+
+        urunadedi_textfield.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                urunadedi_textfieldActionPerformed(evt);
+            }
+        });
         getContentPane().add(urunadedi_textfield);
         urunadedi_textfield.setBounds(140, 130, 110, 30);
 
@@ -305,7 +311,7 @@ public class Customer_Panel extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton3);
-        jButton3.setBounds(40, 460, 190, 50);
+        jButton3.setBounds(30, 460, 190, 50);
 
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -374,6 +380,9 @@ public class Customer_Panel extends javax.swing.JFrame {
         tablo();
         uruntablo.enable();
         jButton2.setEnabled(true);
+        urunadi_textfield.setText("");
+        urunadedi_textfield.setText("");
+        jDateChooser1.setDate(null);        
     }//GEN-LAST:event_urunekle_buttonActionPerformed
 
     private void logout_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logout_buttonActionPerformed
@@ -389,6 +398,9 @@ public class Customer_Panel extends javax.swing.JFrame {
         tablo2();
         uruntablo.disable();
         jButton2.setEnabled(false);
+        urunadi_textfield.setText("");
+        urunadedi_textfield.setText("");
+        jDateChooser1.setDate(null);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void sehirboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sehirboxActionPerformed
@@ -426,12 +438,18 @@ public class Customer_Panel extends javax.swing.JFrame {
          tablo();
         uruntablo.enable();
         jButton2.setEnabled(true);
+        urunadi_textfield.setText("");
+        urunadedi_textfield.setText("");
+        jDateChooser1.setDate(null);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         tablo();
         uruntablo.enable();
         jButton2.setEnabled(true);
+        urunadi_textfield.setText("");
+        urunadedi_textfield.setText("");
+        jDateChooser1.setDate(null);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void uruntabloMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_uruntabloMouseClicked
@@ -443,6 +461,10 @@ public class Customer_Panel extends javax.swing.JFrame {
        sorter.setRowFilter(RowFilter.regexFilter(jTextField1.getText()));
        uruntablo.setRowSorter(sorter);
     }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void urunadedi_textfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_urunadedi_textfieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_urunadedi_textfieldActionPerformed
 
     /**
      * @param args the command line arguments

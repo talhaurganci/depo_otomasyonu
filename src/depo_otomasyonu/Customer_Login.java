@@ -40,6 +40,7 @@ public class Customer_Login extends javax.swing.JFrame {
         login_button = new javax.swing.JButton();
         password_text = new javax.swing.JPasswordField();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         Background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -82,6 +83,7 @@ public class Customer_Login extends javax.swing.JFrame {
         getContentPane().add(password_text);
         password_text.setBounds(270, 170, 150, 50);
 
+        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton1.setText("Kayıt Ol");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -90,6 +92,16 @@ public class Customer_Login extends javax.swing.JFrame {
         });
         getContentPane().add(jButton1);
         jButton1.setBounds(380, 310, 80, 30);
+
+        jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton2.setText("Geri Dön");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton2);
+        jButton2.setBounds(10, 10, 90, 40);
 
         Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/depo_otomasyonu/background.jpg"))); // NOI18N
         Background.setMaximumSize(new java.awt.Dimension(500, 400));
@@ -152,6 +164,12 @@ public class Customer_Login extends javax.swing.JFrame {
         add.show();
         this.hide();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        Giris_Ekrani object = new Giris_Ekrani();
+        object.show();
+        this.hide();
+    }//GEN-LAST:event_jButton2ActionPerformed
     
     /**
      * @param args the command line arguments
@@ -191,6 +209,7 @@ public class Customer_Login extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Background;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton login_button;
     private javax.swing.JLabel password_label;
     private javax.swing.JPasswordField password_text;

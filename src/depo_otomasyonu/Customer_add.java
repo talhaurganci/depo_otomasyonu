@@ -108,7 +108,7 @@ public class Customer_add extends javax.swing.JFrame {
         soyad_label.setBounds(60, 90, 140, 40);
 
         adres_label.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        adres_label.setText("Adres:");
+        adres_label.setText("Şehir:");
         getContentPane().add(adres_label);
         adres_label.setBounds(60, 150, 140, 40);
 
