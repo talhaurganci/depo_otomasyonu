@@ -1,4 +1,4 @@
-# veritabani
+# Depo_Otomasyonu
 Bu proje, veri tabanı yönetim sistemleri dersinde geliştirdiğim bir final projesidir. Talha Urgancı ve Muhammed Emin Tırnakçı tarafından geliştirildi.
 Mehmet Aktaş'a yardımlarından dolayı teşekkür ederiz.
 
