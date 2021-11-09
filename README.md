@@ -4,6 +4,7 @@ Mehmet Aktaş'a yardımlarından dolayı teşekkür ederiz.
 
 This project is a final project that I developed in the database management systems course. It was developed by Talha Urgancı and Muhammed Emin Tırnakçı.
 We would like to thank Mehmet Aktaş for his assistance in the development of this project.
+
 ![manager_panel](https://user-images.githubusercontent.com/65421059/141021009-d81ea46d-1ce0-4f01-be05-9f7735888463.PNG)
 ![customer_panel](https://user-images.githubusercontent.com/65421059/141021014-9e3b6242-41cd-4c45-842d-f5165559d76c.PNG)
 ![customer_add](https://user-images.githubusercontent.com/65421059/141021016-52f0b6a7-5861-495e-95c5-8c958eb8da03.PNG)
